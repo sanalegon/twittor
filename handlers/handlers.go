@@ -20,6 +20,8 @@ func Manejadores() {
 	// Rutas(Endpoints):
 	// si endpoint es registro y llego por post, ejecutara el middleware. Chequeamos que la bd es ok, de ser asi, devolver el control al router de registro
 	router.HandleFunc("/registro", middlew.ChequeoBD(routers.Registro)).Methods("POST") // endpoint del local post. Con chequeo miramos si el return de esta funcion es correcto, hara un (routers.) registro
+	router.HandleFunc("/login", middlew.ChequeoBD(routers.Login)).Methods("POST")
+	router.HandleFunc("/verperfil", middlew.ChequeoBD(middlew.ValidoJWT(routers.VerPerfil))).Methods("GET") // Aqui hay un middleware para validar el token
 
 	PORT := os.Getenv("PORT") // si no hay una variable de entorno llamada port, la configuraremos
 	if PORT == "" {
